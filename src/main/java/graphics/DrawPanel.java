@@ -32,6 +32,7 @@ public class DrawPanel extends JPanel {
 	public void clear(){
 		vertex_list.clear();
 		edges_list.clear();
+		bridges_list.clear();
 		cur_num = 0;
 		repaint();
 	}

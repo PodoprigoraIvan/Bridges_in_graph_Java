@@ -21,6 +21,11 @@ public class AppFrame extends JFrame {
 	JLabel max_edges_label;
 	JButton generate_graph_button;
 	JButton show_bridges_button;
+	JMenuBar menu_bar;
+	JMenu menu;
+	JMenuItem save_file_menu_item;
+	JMenuItem load_file_menu_item;
+	
 	public AppFrame(){
 		super("Finding bridges in graph application");
 		panel = new DrawPanel();
@@ -28,6 +33,15 @@ public class AppFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1200, 800);
 		this.setLayout(new GridBagLayout());
+		
+		menu_bar = new JMenuBar();
+		menu = new JMenu("Файл");
+		save_file_menu_item = new JMenuItem("Сохранить граф в файл");
+		load_file_menu_item = new JMenuItem("Загрузить граф из файла");
+		menu.add(save_file_menu_item);
+		menu.add(load_file_menu_item);
+		menu_bar.add(menu);
+		this.setJMenuBar(menu_bar);
 		
 		slider = new JSlider(30, 200, 50);
 		change_size_label = new JLabel("Размер вершин ");
@@ -52,7 +66,7 @@ public class AppFrame extends JFrame {
 			}
 		});
 		
-		delete_graph_button = new JButton("Стереть граф");
+		delete_graph_button = new JButton("Очистить граф");
 		delete_graph_button.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.clear();
@@ -76,25 +90,7 @@ public class AppFrame extends JFrame {
 		});
 
 		max_vertices_label = new JLabel("Максимальное число вершин: ");
-		max_edges_label = new JLabel("Максимальное число рёбер: ");
-		
-		/*
-		this.add(change_size_label, new GridBagConstraints(0,0,1,1,0,0.1, GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL, new Insets(1,2,0,0), 0,0));
-		
-		this.add(slider, new GridBagConstraints(1,0,2,1,0.2,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(add_edge_label, new GridBagConstraints(3,0,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(first_vertex, new GridBagConstraints(4,0,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,2,0), 0,0));
-		
-		this.add(second_vertex, new GridBagConstraints(5,0,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,2,0), 0,0));
-		
-		this.add(add_edge_button, new GridBagConstraints(6,0,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,0,0), 0,0));
-		
-		this.add(delete_graph_button, new GridBagConstraints(7,0,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,0,0), 0,0));
-		*/
-		
-		
+		max_edges_label = new JLabel("Максимальное число рёбер: ");		
 		
 		this.add(delete_graph_button, new GridBagConstraints(0,0,1,1,0,0.05, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,0,0), 0,0));
 		
