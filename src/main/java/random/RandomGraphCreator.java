@@ -1,10 +1,9 @@
 package random;
 
-
 import graphcomponents.*;
 import java.util.ArrayList;
 
-public class Random {
+public class RandomGraphCreator {
 
     public static boolean search(Vertex vertex1, ArrayList<Edge> edges_list, Vertex vertex2, int edges_list_size) {
         for (int i = 0; i < edges_list_size; i++){

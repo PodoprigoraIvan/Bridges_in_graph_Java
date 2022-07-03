@@ -3,7 +3,7 @@ package algorithm;
 import graphcomponents.*;
 import java.util.ArrayList;
 
-public class Application {
+public class BridgesFinder {
     public static int maxN = 100;
     public static boolean[] used = new boolean[maxN];
     public static int[] tin = new int[maxN];
