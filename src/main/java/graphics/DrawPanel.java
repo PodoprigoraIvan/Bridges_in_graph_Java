@@ -57,12 +57,12 @@ public class DrawPanel extends JPanel {
 		}
 		if (v1 == null || v2 == null) return;
 		edges_list.add(new Edge(v1, v2));
+		bridges_list.clear();
 		repaint();
 	}
 	
 	public void generateGraph(String maxV, String maxE){
-		vertex_list.clear();
-		edges_list.clear();
+		clear();
 		RandomGraphCreator.CreateRandomGraph(vertex_list, edges_list, Integer.valueOf(maxV), Integer.valueOf(maxE), 600, 900);
 		cur_num = vertex_list.size();
 		repaint();
@@ -70,7 +70,6 @@ public class DrawPanel extends JPanel {
 	
 	public void showBridges() {
 		bridges_list = BridgesFinder.findBridges(vertex_list, edges_list);
-		System.out.println(bridges_list.size());
 		repaint();
 	}
 	
