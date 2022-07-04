@@ -1,6 +1,6 @@
 package algorithm;
 
-import graphcomponents.*;
+import graph.*;
 import java.util.ArrayList;
 
 public class BridgesFinder {

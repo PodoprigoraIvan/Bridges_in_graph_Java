@@ -1,4 +1,4 @@
-package graphcomponents;
+package graph;
 
 public class Edge {
 	public Vertex first;

@@ -1,4 +1,4 @@
-package graphcomponents;
+package graph;
 
 public class Vertex {
 	public int x, y, num;

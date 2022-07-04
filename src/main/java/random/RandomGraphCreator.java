@@ -1,6 +1,6 @@
 package random;
 
-import graphcomponents.*;
+import graph.*;
 import java.util.ArrayList;
 
 public class RandomGraphCreator {
