@@ -4,15 +4,15 @@ import graphcomponents.*;
 import java.util.ArrayList;
 
 public class BridgesFinder {
-    public static int maxN = 100;
+    public static int maxN = 1000;
     public static boolean[] used = new boolean[maxN];
     public static int[] tin = new int[maxN];
     public static int[] fup = new int[maxN];
     public static int timer = 0;
 
     public static ArrayList<ArrayList<Integer>> converter(ArrayList<Vertex> vertex_list, ArrayList<Edge> edges_list) {
-        ArrayList<ArrayList<Integer>> graph = new ArrayList<>(vertex_list.size());
-        for(int i = 0; i < vertex_list.size(); i++) {
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>(vertex_list.size()+1);
+        for(int i = 0; i < vertex_list.size()+1; i++) {
             graph.add(new ArrayList());
         }
         for(Edge edge: edges_list){
@@ -47,6 +47,9 @@ public class BridgesFinder {
     }
 
     public static ArrayList<Edge> findBridges(ArrayList<Vertex> vertex_list, ArrayList<Edge> edges_list){
+        for (int i = 0; i < used.length; i++){
+            used[i] = false;
+        }
 		ArrayList<ArrayList<Integer>> graph = converter(vertex_list, edges_list);
         ArrayList<Edge> bridges_list = new ArrayList<>();
         for (int i = 0; i < graph.size(); ++i)
