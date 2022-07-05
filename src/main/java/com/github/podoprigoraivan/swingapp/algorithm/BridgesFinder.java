@@ -1,6 +1,6 @@
-package algorithm;
+package com.github.podoprigoraivan.swingapp.algorithm;
 
-import graph.*;
+import com.github.podoprigoraivan.swingapp.graph.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,11 +9,13 @@ public class BridgesFinder {
     private static int[] tin;
     private static int[] fup;
     private static int timer;
+    private Graph graph;
 
     public BridgesFinder(Graph graph) {
         used = new boolean[graph.VertexAmount()];
         tin = new int[graph.VertexAmount()];
         fup = new int[graph.VertexAmount()];
+        this.graph = graph;
         timer = 0;
     }
 
@@ -35,7 +37,7 @@ public class BridgesFinder {
         }
     }
 
-    public ArrayList<int[]> FindBridges(Graph graph){
+    public ArrayList<int[]> FindBridges(){
         Arrays.fill(used, false);
         ArrayList<int[]> bridges_list = new ArrayList<>();
         for (int i = 0; i < graph.VertexAmount(); ++i){

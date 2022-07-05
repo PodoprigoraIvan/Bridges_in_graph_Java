@@ -11,6 +11,7 @@ import com.github.podoprigoraivan.swingapp.graph.*;
 
 public class GraphDrawPanel extends JPanel {
 	private DrawableGraph drawableGraph;
+	private boolean showBridges = false;
 	int circleSize = 50;
 		
 	GraphDrawPanel(DrawableGraph drawableGraph){
@@ -19,12 +20,14 @@ public class GraphDrawPanel extends JPanel {
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				drawableGraph.AddVertex(e.getX() - circleSize /2, e.getY() - circleSize /2);
-				//vertex_list.add(new Vertex(e.getX() - circle_size/2, e.getY() - circle_size/2, ++cur_num));
 				repaint();
 			}
 		});
 	}
 
+	public void ToggleShowBridges(){
+		showBridges = !showBridges;
+	}
 	public void changeCircleSize(int new_size){
 		this.circleSize = new_size;
 		repaint();
@@ -42,6 +45,16 @@ public class GraphDrawPanel extends JPanel {
 				int x2 = drawableGraph.GetX(drawableGraph.GetVertexAdjacencyList(i).get(j)) + circleSize / 2;
 				int y1 = drawableGraph.GetY(i) + circleSize / 2;
 				int y2 = drawableGraph.GetY(drawableGraph.GetVertexAdjacencyList(i).get(j)) + circleSize / 2;
+				g2D.drawLine(x1, y1, x2, y2);
+			}
+		}
+		g2D.setPaint(Color.GREEN);
+		if (showBridges && drawableGraph.bridgesList != null){
+			for (int i = 0; i < drawableGraph.bridgesList.size(); i++){
+				int x1 = drawableGraph.GetX(drawableGraph.bridgesList.get(i)[0]) + circleSize / 2;
+				int y1 = drawableGraph.GetY(drawableGraph.bridgesList.get(i)[0]) + circleSize / 2;
+				int x2 = drawableGraph.GetX(drawableGraph.bridgesList.get(i)[1]) + circleSize / 2;
+				int y2 = drawableGraph.GetY(drawableGraph.bridgesList.get(i)[1]) + circleSize / 2;
 				g2D.drawLine(x1, y1, x2, y2);
 			}
 		}

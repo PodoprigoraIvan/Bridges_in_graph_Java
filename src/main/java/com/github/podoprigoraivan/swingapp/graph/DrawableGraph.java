@@ -6,6 +6,8 @@ public class DrawableGraph extends Graph {
     private ArrayList<Integer> coordinatesX;
     private ArrayList<Integer> coordinatesY;
 
+    public ArrayList<int[]> bridgesList;
+
     public DrawableGraph() {
         coordinatesX = new ArrayList<>();
         coordinatesY = new ArrayList<>();
@@ -31,5 +33,8 @@ public class DrawableGraph extends Graph {
         super.clear();
         coordinatesX.clear();
         coordinatesY.clear();
+        if (bridgesList != null) {
+            bridgesList.clear();
+        }
     }
 }

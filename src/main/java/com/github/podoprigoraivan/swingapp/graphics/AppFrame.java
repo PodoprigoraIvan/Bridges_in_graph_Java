@@ -1,6 +1,8 @@
 package com.github.podoprigoraivan.swingapp.graphics;
 
+import com.github.podoprigoraivan.swingapp.algorithm.BridgesFinder;
 import com.github.podoprigoraivan.swingapp.graph.DrawableGraph;
+import com.github.podoprigoraivan.swingapp.random.RandomGraphGenerator;
 
 import java.awt.*;
 import javax.swing.*;
@@ -54,30 +56,38 @@ public class AppFrame extends JFrame {
 		
 		firstVertex = new JTextField();
 		secondVertex = new JTextField();
-		JTextField max_vertices = new JTextField();
-		JTextField max_edges = new JTextField();
+		maxVertices = new JTextField("10");
+		maxEdges = new JTextField("10");
 		
 		addEdgeButton = new JButton("Добавить ребро");
 		addEdgeButton.addActionListener(e -> {
 			drawableGraph.AddEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
+			drawableGraph.bridgesList = null;
 			panel.repaint();
 		});
-		//addEdgeButton.addActionListener(e -> panel.addEdge(firstVertex.getText(), secondVertex.getText()));
 		
 		deleteGraphButton = new JButton("Очистить граф");
 		deleteGraphButton.addActionListener(e -> {
 			drawableGraph.clear();
 			panel.repaint();
 		});
-		//deleteGraphButton.addActionListener(e -> panel.clear());
 		
 		generateGraphButton = new JButton("Сгенерировать случайный граф");
-		//generateGraphButton.addActionListener(e -> panel.generateGraph(max_vertices.getText(), max_edges.getText()));
+		generateGraphButton.addActionListener(e -> {
+			RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, Integer.parseInt(maxVertices.getText()), Integer.parseInt(maxEdges.getText()), (int)(panel.getSize().getHeight() * 0.9), (int)(panel.getSize().getWidth() * 0.9));
+			generator.Generate();
+			panel.repaint();
+		});
 		
-		showBridgesButton = new JButton("Найти мосты");
+		showBridgesButton = new JButton("Показать мосты");
 		showBridgesButton.setBackground(Color.GREEN);
 		showBridgesButton.setOpaque(true);
-		//showBridgesButton.addActionListener(e -> panel.showBridges());
+		showBridgesButton.addActionListener(e -> {
+			BridgesFinder bridgesFinder = new BridgesFinder(drawableGraph);
+			drawableGraph.bridgesList = bridgesFinder.FindBridges();
+			panel.ToggleShowBridges();
+			panel.repaint();
+		});
 
 		maxVerticesLabel = new JLabel("Максимальное число вершин: ");
 		maxEdgesLabel = new JLabel("Максимальное число рёбер: ");
@@ -98,11 +108,11 @@ public class AppFrame extends JFrame {
 		
 		this.add(maxVerticesLabel, new GridBagConstraints(0,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		
-		this.add(max_vertices, new GridBagConstraints(1,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(maxVertices, new GridBagConstraints(1,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		
 		this.add(maxEdgesLabel, new GridBagConstraints(0,2,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		
-		this.add(max_edges, new GridBagConstraints(1,2,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(maxEdges, new GridBagConstraints(1,2,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		
 		this.add(generateGraphButton, new GridBagConstraints(2,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
 		
@@ -113,6 +123,4 @@ public class AppFrame extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
-	
-	
 }
