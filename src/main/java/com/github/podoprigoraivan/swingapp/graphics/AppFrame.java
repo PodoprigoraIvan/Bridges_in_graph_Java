@@ -1,31 +1,34 @@
 package com.github.podoprigoraivan.swingapp.graphics;
 
+import com.github.podoprigoraivan.swingapp.graph.DrawableGraph;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class AppFrame extends JFrame {
-	GraphDrawPanel panel;
-	JSlider slider;
-	JLabel changeSizeLabel;
-	JLabel addEdgeLabel;
-	JTextField firstVertex;
-	JTextField secondVertex;
-	JButton addEdgeButton;
-	JButton deleteGraphButton;
-	JTextField maxVertices;
-	JTextField maxEdges;
-	JLabel maxVerticesLabel;
-	JLabel maxEdgesLabel;
-	JButton generateGraphButton;
-	JButton showBridgesButton;
-	JMenuBar barMenu;
-	JMenu menu;
-	JMenuItem saveFileMenuItem;
-	JMenuItem loadFileMenuItem;
+	private GraphDrawPanel panel;
+	private JSlider slider;
+	private JLabel changeSizeLabel;
+	private JLabel addEdgeLabel;
+	private JTextField firstVertex;
+	private JTextField secondVertex;
+	private JButton addEdgeButton;
+	private JButton deleteGraphButton;
+	private JTextField maxVertices;
+	private JTextField maxEdges;
+	private JLabel maxVerticesLabel;
+	private JLabel maxEdgesLabel;
+	private JButton generateGraphButton;
+	private JButton showBridgesButton;
+	private JMenuBar barMenu;
+	private JMenu menu;
+	private JMenuItem saveFileMenuItem;
+	private JMenuItem loadFileMenuItem;
 	
 	public AppFrame(){
 		super("Finding bridges in graph application");
-		panel = new GraphDrawPanel();
+		DrawableGraph drawableGraph = new DrawableGraph();
+		panel = new GraphDrawPanel(drawableGraph);
 		panel.setBackground(Color.WHITE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(1200, 800);
@@ -55,18 +58,26 @@ public class AppFrame extends JFrame {
 		JTextField max_edges = new JTextField();
 		
 		addEdgeButton = new JButton("Добавить ребро");
-		addEdgeButton.addActionListener(e -> panel.addEdge(firstVertex.getText(), secondVertex.getText()));
+		addEdgeButton.addActionListener(e -> {
+			drawableGraph.AddEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
+			panel.repaint();
+		});
+		//addEdgeButton.addActionListener(e -> panel.addEdge(firstVertex.getText(), secondVertex.getText()));
 		
 		deleteGraphButton = new JButton("Очистить граф");
-		deleteGraphButton.addActionListener(e -> panel.clear());
+		deleteGraphButton.addActionListener(e -> {
+			drawableGraph.clear();
+			panel.repaint();
+		});
+		//deleteGraphButton.addActionListener(e -> panel.clear());
 		
 		generateGraphButton = new JButton("Сгенерировать случайный граф");
-		generateGraphButton.addActionListener(e -> panel.generateGraph(max_vertices.getText(), max_edges.getText()));
+		//generateGraphButton.addActionListener(e -> panel.generateGraph(max_vertices.getText(), max_edges.getText()));
 		
 		showBridgesButton = new JButton("Найти мосты");
 		showBridgesButton.setBackground(Color.GREEN);
 		showBridgesButton.setOpaque(true);
-		showBridgesButton.addActionListener(e -> panel.showBridges());
+		//showBridgesButton.addActionListener(e -> panel.showBridges());
 
 		maxVerticesLabel = new JLabel("Максимальное число вершин: ");
 		maxEdgesLabel = new JLabel("Максимальное число рёбер: ");

@@ -26,6 +26,7 @@ public class DrawableGraph extends Graph {
     }
 
     public void clear() {
+        super.clear();
         coordinatesX.clear();
         coordinatesY.clear();
     }

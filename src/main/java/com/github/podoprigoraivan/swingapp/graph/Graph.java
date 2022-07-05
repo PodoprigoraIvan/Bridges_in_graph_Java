@@ -22,7 +22,7 @@ public class Graph {
     }
 
     public void AddEdge(int v1, int v2){
-        if (v1 == v2 || v1 > this.VertexAmount() || v2 > this.VertexAmount()) {
+        if (v1 == v2 || v1 >= this.VertexAmount() || v2 >= this.VertexAmount()) {
             return;
         }
         adjacencyList.get(v1).add(v2);
