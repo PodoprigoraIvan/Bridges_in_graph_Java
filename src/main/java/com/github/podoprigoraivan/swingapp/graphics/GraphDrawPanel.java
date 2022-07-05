@@ -11,23 +11,49 @@ import com.github.podoprigoraivan.swingapp.graph.*;
 
 public class GraphDrawPanel extends JPanel {
 	private DrawableGraph drawableGraph;
-	private boolean showBridges = false;
+	public boolean showBridges = false;
+	private Integer draggedVertex = null;
 	int circleSize = 50;
 		
 	GraphDrawPanel(DrawableGraph drawableGraph){
 		this.setPreferredSize(new Dimension(400, 400));
 		this.drawableGraph = drawableGraph;
-		this.addMouseListener(new MouseAdapter(){
+		this.addMouseListener(new MouseListener(){
 			public void mouseClicked(MouseEvent e){
 				drawableGraph.AddVertex(e.getX() - circleSize /2, e.getY() - circleSize /2);
 				repaint();
 			}
+			public void mousePressed(MouseEvent e){
+				if (draggedVertex != null) return;
+				int rSquare = circleSize * circleSize;
+				for (int i = 0; i < drawableGraph.VertexAmount(); i++){
+					int x = drawableGraph.GetX(i);
+					int y = drawableGraph.GetY(i);
+					if ((e.getX() - x)*(e.getX() - x) + (e.getY() - y)*(e.getY() - y) <= rSquare){
+						draggedVertex = i;
+						repaint();
+					}
+				}
+			}
+			public void mouseReleased(MouseEvent e){
+				draggedVertex = null;
+			}
+			public void mouseEntered(MouseEvent e){}
+			public void mouseExited(MouseEvent e){}
+		});
+		this.addMouseMotionListener(new MouseMotionListener() {
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				if (draggedVertex == null) return;
+				drawableGraph.changeX(draggedVertex, e.getX() - circleSize/2);
+				drawableGraph.changeY(draggedVertex, e.getY() - circleSize/2);
+				repaint();
+			}
+			@Override
+			public void mouseMoved(MouseEvent e) {}
 		});
 	}
 
-	public void ToggleShowBridges(){
-		showBridges = !showBridges;
-	}
 	public void changeCircleSize(int new_size){
 		this.circleSize = new_size;
 		repaint();

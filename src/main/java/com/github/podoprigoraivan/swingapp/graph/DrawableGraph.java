@@ -21,12 +21,20 @@ public class DrawableGraph extends Graph {
         coordinatesY.add(y);
     }
 
-    public int GetX(int vertex_num){
-        return coordinatesX.get(vertex_num);
+    public int GetX(int vertexNum){
+        return coordinatesX.get(vertexNum);
     }
 
-    public int GetY(int vertex_num) {
-        return coordinatesY.get(vertex_num);
+    public int GetY(int vertexNum) {
+        return coordinatesY.get(vertexNum);
+    }
+
+    public void changeX(int vertexNum, int newX) {
+        coordinatesX.set(vertexNum, newX);
+    }
+
+    public void changeY(int vertexNum, int newY) {
+        coordinatesY.set(vertexNum, newY);
     }
 
     public void clear() {

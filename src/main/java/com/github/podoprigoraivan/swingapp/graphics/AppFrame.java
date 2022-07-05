@@ -63,6 +63,7 @@ public class AppFrame extends JFrame {
 		addEdgeButton.addActionListener(e -> {
 			drawableGraph.AddEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
 			drawableGraph.bridgesList = null;
+			panel.showBridges = false;
 			panel.repaint();
 		});
 		
@@ -85,7 +86,7 @@ public class AppFrame extends JFrame {
 		showBridgesButton.addActionListener(e -> {
 			BridgesFinder bridgesFinder = new BridgesFinder(drawableGraph);
 			drawableGraph.bridgesList = bridgesFinder.FindBridges();
-			panel.ToggleShowBridges();
+			panel.showBridges = true;
 			panel.repaint();
 		});
 
