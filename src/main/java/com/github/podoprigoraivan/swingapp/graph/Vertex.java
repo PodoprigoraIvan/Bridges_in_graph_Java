@@ -1,4 +1,4 @@
-package graph;
+package com.github.podoprigoraivan.swingapp.graph;
 
 public class Vertex {
 	public int x, y, num;

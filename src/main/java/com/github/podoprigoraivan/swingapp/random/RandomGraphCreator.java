@@ -1,6 +1,6 @@
-package random;
+package com.github.podoprigoraivan.swingapp.random;
 
-import graph.*;
+import com.github.podoprigoraivan.swingapp.graph.*;
 import java.util.ArrayList;
 
 public class RandomGraphCreator {

@@ -1,6 +1,6 @@
-package algorithm;
+package com.github.podoprigoraivan.swingapp.algorithm;
 
-import graph.*;
+import com.github.podoprigoraivan.swingapp.graph.*;
 import java.util.ArrayList;
 
 public class BridgesFinder {

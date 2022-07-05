@@ -1,4 +1,4 @@
-package graph;
+package com.github.podoprigoraivan.swingapp.graph;
 
 public class Edge {
 	public Vertex first;

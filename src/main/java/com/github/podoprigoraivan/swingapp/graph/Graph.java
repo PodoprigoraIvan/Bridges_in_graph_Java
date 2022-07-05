@@ -1,4 +1,4 @@
-package graph;
+package com.github.podoprigoraivan.swingapp.graph;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,10 @@ public class Graph {
         }
         adjacencyList.get(v1).add(v2);
         adjacencyList.get(v2).add(v1);
+    }
+
+    public void clear() {
+        adjacencyList.clear();
     }
 }
 

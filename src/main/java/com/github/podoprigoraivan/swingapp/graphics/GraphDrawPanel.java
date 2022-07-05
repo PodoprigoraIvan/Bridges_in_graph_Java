@@ -1,4 +1,4 @@
-package graphics;
+package com.github.podoprigoraivan.swingapp.graphics;
 
 import javax.swing.*; 
 import java.awt.Color;
@@ -7,18 +7,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.util.ArrayList;
-import graph.*;
-import random.*;
-import algorithm.*;
+import com.github.podoprigoraivan.swingapp.graph.*;
+import com.github.podoprigoraivan.swingapp.random.*;
+import com.github.podoprigoraivan.swingapp.algorithm.*;
 
-public class DrawPanel extends JPanel {
+public class GraphDrawPanel extends JPanel {
+	private DrawableGraph drawableGraph;
 	ArrayList<Vertex> vertex_list = new ArrayList<>();
 	ArrayList<Edge> edges_list = new ArrayList<>();
 	ArrayList<Edge> bridges_list = new ArrayList<>();
 	int cur_num = 0;
 	int circle_size = 50;
 		
-	DrawPanel(){
+	GraphDrawPanel(){
 		this.setPreferredSize(new Dimension(400, 400));
 		this.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
@@ -75,7 +76,7 @@ public class DrawPanel extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2D = (Graphics2D)g;
-		g.setFont(new Font("Courier", Font.PLAIN, circle_size/3/*20*/));
+		g.setFont(new Font("Courier", Font.PLAIN, circle_size/3));
 		g2D.setStroke(new BasicStroke(4));
 		
 		g2D.setPaint(Color.BLUE);
