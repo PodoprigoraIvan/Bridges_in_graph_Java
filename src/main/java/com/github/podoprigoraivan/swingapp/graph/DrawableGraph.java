@@ -11,6 +11,8 @@ public class DrawableGraph extends Graph {
         coordinatesY = new ArrayList<>();
     }
 
+    public void AddVertex(){}
+
     public void AddVertex(int x, int y){
         super.AddVertex();
         coordinatesX.add(x);
