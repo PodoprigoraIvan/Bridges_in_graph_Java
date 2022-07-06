@@ -12,6 +12,7 @@ public class AppFrame extends JFrame {
 	private JSlider slider;
 	private JLabel changeSizeLabel;
 	private JLabel addEdgeLabel;
+	private JLabel incorrectInputLabel;
 	private JTextField firstVertex;
 	private JTextField secondVertex;
 	private JButton addEdgeButton;
@@ -62,10 +63,15 @@ public class AppFrame extends JFrame {
 		
 		addEdgeButton = new JButton("Добавить ребро");
 		addEdgeButton.addActionListener(e -> {
-			drawableGraph.addEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
-			drawableGraph.bridgesList = null;
-			panel.showBridges = false;
-			panel.repaint();
+			try {
+				drawableGraph.addEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
+				drawableGraph.bridgesList = null;
+				panel.showBridges = false;
+				panel.repaint();
+				incorrectInputLabel.setText("");
+			} catch (NumberFormatException exception) {
+				incorrectInputLabel.setText("Некорректный ввод");
+			}
 		});
 		
 		deleteGraphButton = new JButton("Очистить граф");
@@ -76,9 +82,14 @@ public class AppFrame extends JFrame {
 		
 		generateGraphButton = new JButton("Сгенерировать случайный граф");
 		generateGraphButton.addActionListener(e -> {
-			RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, Integer.parseInt(maxVertices.getText()), Integer.parseInt(maxEdges.getText()), (int)(panel.getSize().getHeight() * 0.9), (int)(panel.getSize().getWidth() * 0.9));
-			generator.generate();
-			panel.repaint();
+			try {
+				RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, Integer.parseInt(maxVertices.getText()), Integer.parseInt(maxEdges.getText()), (int) (panel.getSize().getHeight() * 0.9), (int) (panel.getSize().getWidth() * 0.9));
+				generator.generate();
+				panel.repaint();
+				incorrectInputLabel.setText("");
+			} catch (NumberFormatException exception) {
+				incorrectInputLabel.setText("Некорректный ввод");
+			}
 		});
 		
 		showBridgesButton = new JButton("Показать мосты");
@@ -93,6 +104,8 @@ public class AppFrame extends JFrame {
 
 		maxVerticesLabel = new JLabel("Максимальное число вершин: ");
 		maxEdgesLabel = new JLabel("Максимальное число рёбер: ");
+		incorrectInputLabel = new JLabel("");
+		incorrectInputLabel.setForeground(Color.RED);
 		
 		this.add(deleteGraphButton, new GridBagConstraints(0,0,1,1,0,0.05, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,0,0), 0,0));
 		this.add(changeSizeLabel, new GridBagConstraints(1,0,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(1,2,0,0), 0,0));
@@ -107,7 +120,8 @@ public class AppFrame extends JFrame {
 		this.add(maxEdges, new GridBagConstraints(1,2,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(generateGraphButton, new GridBagConstraints(2,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
 		this.add(showBridgesButton, new GridBagConstraints(3,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
-		this.add(panel, new GridBagConstraints(0,3,10,10,1,1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0,0));
+		this.add(incorrectInputLabel, new GridBagConstraints(0,3,1,1,0,0, GridBagConstraints.EAST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0,0));
+		this.add(panel, new GridBagConstraints(0,4,10,10,1,1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0,0));
 		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

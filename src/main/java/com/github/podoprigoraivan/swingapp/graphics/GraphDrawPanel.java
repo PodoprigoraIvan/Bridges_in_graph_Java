@@ -19,7 +19,8 @@ public class GraphDrawPanel extends JPanel {
 		this.drawableGraph = drawableGraph;
 		this.addMouseListener(new MouseListener(){
 			public void mouseClicked(MouseEvent e){
-				drawableGraph.addVertex(e.getX() - circleSize /2, e.getY() - circleSize /2);
+				if (e.getButton() == MouseEvent.BUTTON3)
+					drawableGraph.addVertex(e.getX() - circleSize /2, e.getY() - circleSize /2);
 				repaint();
 			}
 			public void mousePressed(MouseEvent e){
@@ -43,8 +44,8 @@ public class GraphDrawPanel extends JPanel {
 		this.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent e) {
 				if (draggedVertex == null) return;
-				drawableGraph.changeX(draggedVertex, e.getX() - circleSize/2);
-				drawableGraph.changeY(draggedVertex, e.getY() - circleSize/2);
+				drawableGraph.changeX(draggedVertex, e.getX() - circleSize / 2);
+				drawableGraph.changeY(draggedVertex, e.getY() - circleSize / 2);
 				repaint();
 			}
 			public void mouseMoved(MouseEvent e) {}
