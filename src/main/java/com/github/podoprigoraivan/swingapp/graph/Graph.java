@@ -9,26 +9,26 @@ public class Graph {
         adjacencyList = new ArrayList<>();
     }
 
-    public void AddVertex() {
+    public void addVertex() {
         adjacencyList.add(new ArrayList<>());
     }
 
-    public int VertexAmount() {
+    public int vertexAmount() {
         return adjacencyList.size();
     }
 
-    public ArrayList<Integer> GetVertexAdjacencyList(int num) {
+    public ArrayList<Integer> getVertexAdjacencyList(int num) {
         return adjacencyList.get(num);
     }
 
-    public void AddEdge(int v1, int v2){
-        if (IsEdgeInGraph(v1, v2)) return;
+    public void addEdge(int v1, int v2){
+        if (isEdgeInGraph(v1, v2) || v1 < 0 || v2 < 0 || v1 >= this.vertexAmount() || v2 >= this.vertexAmount()) return;
         adjacencyList.get(v1).add(v2);
         adjacencyList.get(v2).add(v1);
     }
 
-    public boolean IsEdgeInGraph(int v1, int v2) {
-        if (v1 == v2 || v1 >= this.VertexAmount() || v2 >= this.VertexAmount()) {
+    public boolean isEdgeInGraph(int v1, int v2) {
+        if (v1 == v2 || v1 >= this.vertexAmount() || v2 >= this.vertexAmount() || v1 < 0 || v2 < 0) {
             return false;
         }
         for (int i = 0; i < adjacencyList.get(v1).size(); i++){

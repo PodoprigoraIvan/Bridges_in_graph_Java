@@ -13,19 +13,19 @@ public class DrawableGraph extends Graph {
         coordinatesY = new ArrayList<>();
     }
 
-    public void AddVertex(){}
+    public void addVertex(){}
 
-    public void AddVertex(int x, int y){
-        super.AddVertex();
+    public void addVertex(int x, int y){
+        super.addVertex();
         coordinatesX.add(x);
         coordinatesY.add(y);
     }
 
-    public int GetX(int vertexNum){
+    public int getX(int vertexNum){
         return coordinatesX.get(vertexNum);
     }
 
-    public int GetY(int vertexNum) {
+    public int getY(int vertexNum) {
         return coordinatesY.get(vertexNum);
     }
 

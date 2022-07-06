@@ -33,6 +33,7 @@ public class AppFrame extends JFrame {
 		panel = new GraphDrawPanel(drawableGraph);
 		panel.setBackground(Color.WHITE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setMinimumSize(new Dimension(1000, 400));
 		this.setSize(1200, 800);
 		this.setLayout(new GridBagLayout());
 		
@@ -61,7 +62,7 @@ public class AppFrame extends JFrame {
 		
 		addEdgeButton = new JButton("Добавить ребро");
 		addEdgeButton.addActionListener(e -> {
-			drawableGraph.AddEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
+			drawableGraph.addEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
 			drawableGraph.bridgesList = null;
 			panel.showBridges = false;
 			panel.repaint();
@@ -76,7 +77,7 @@ public class AppFrame extends JFrame {
 		generateGraphButton = new JButton("Сгенерировать случайный граф");
 		generateGraphButton.addActionListener(e -> {
 			RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, Integer.parseInt(maxVertices.getText()), Integer.parseInt(maxEdges.getText()), (int)(panel.getSize().getHeight() * 0.9), (int)(panel.getSize().getWidth() * 0.9));
-			generator.Generate();
+			generator.generate();
 			panel.repaint();
 		});
 		
@@ -85,7 +86,7 @@ public class AppFrame extends JFrame {
 		showBridgesButton.setOpaque(true);
 		showBridgesButton.addActionListener(e -> {
 			BridgesFinder bridgesFinder = new BridgesFinder(drawableGraph);
-			drawableGraph.bridgesList = bridgesFinder.FindBridges();
+			drawableGraph.bridgesList = bridgesFinder.findBridges();
 			panel.showBridges = true;
 			panel.repaint();
 		});
@@ -94,31 +95,18 @@ public class AppFrame extends JFrame {
 		maxEdgesLabel = new JLabel("Максимальное число рёбер: ");
 		
 		this.add(deleteGraphButton, new GridBagConstraints(0,0,1,1,0,0.05, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,2,0,0), 0,0));
-		
 		this.add(changeSizeLabel, new GridBagConstraints(1,0,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(1,2,0,0), 0,0));
-		
-		this.add(slider, new GridBagConstraints(2,0,2,1,0.2,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(addEdgeLabel, new GridBagConstraints(4,0,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(firstVertex, new GridBagConstraints(5,0,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(secondVertex, new GridBagConstraints(6,0,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
-		this.add(addEdgeButton, new GridBagConstraints(7,0,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
+		this.add(slider, new GridBagConstraints(2,0,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(addEdgeLabel, new GridBagConstraints(3,0,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(firstVertex, new GridBagConstraints(5,0,1,1,0.5,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(secondVertex, new GridBagConstraints(7,0,1,1,0.5,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(addEdgeButton, new GridBagConstraints(9,0,1,1,0.4,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(maxVerticesLabel, new GridBagConstraints(0,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
 		this.add(maxVertices, new GridBagConstraints(1,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
 		this.add(maxEdgesLabel, new GridBagConstraints(0,2,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
 		this.add(maxEdges, new GridBagConstraints(1,2,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		
 		this.add(generateGraphButton, new GridBagConstraints(2,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
-		
 		this.add(showBridgesButton, new GridBagConstraints(3,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
-		
 		this.add(panel, new GridBagConstraints(0,3,10,10,1,1, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0,0));
 		
 		this.setLocationRelativeTo(null);
