@@ -1,10 +1,13 @@
 package com.github.podoprigoraivan.swingapp.graphics;
 
+import com.github.podoprigoraivan.swingapp.SaveAndLoad.Loader;
+import com.github.podoprigoraivan.swingapp.SaveAndLoad.Saver;
 import com.github.podoprigoraivan.swingapp.algorithm.BridgesFinder;
 import com.github.podoprigoraivan.swingapp.graph.DrawableGraph;
 import com.github.podoprigoraivan.swingapp.random.RandomGraphGenerator;
 
 import java.awt.*;
+import java.io.File;
 import javax.swing.*;
 
 public class AppFrame extends JFrame {
@@ -40,8 +43,33 @@ public class AppFrame extends JFrame {
 		
 		barMenu = new JMenuBar();
 		menu = new JMenu("Файл");
+		
 		saveFileMenuItem = new JMenuItem("Сохранить граф в файл");
+		saveFileMenuItem.addActionListener(e -> {
+			try {
+				File file = new File("test.json");
+				Saver Write = new Saver(drawableGraph, file);
+				Write.Save();
+				panel.repaint();
+				incorrectInputLabel.setText("");
+			} catch (NumberFormatException exception) {
+				incorrectInputLabel.setText("Некорректный ввод");
+			}
+		});
+
 		loadFileMenuItem = new JMenuItem("Загрузить граф из файла");
+		loadFileMenuItem.addActionListener(e -> {
+			try {
+				File file = new File("test.json");
+				Loader readGraph = new Loader(drawableGraph, file);
+				readGraph.Load();
+				panel.repaint();
+				incorrectInputLabel.setText("");
+			} catch (Exception exception) {
+				exception.printStackTrace();
+			}
+		});
+		
 		menu.add(saveFileMenuItem);
 		menu.add(loadFileMenuItem);
 		barMenu.add(menu);
