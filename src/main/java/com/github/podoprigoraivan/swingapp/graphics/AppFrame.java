@@ -16,12 +16,12 @@ public class AppFrame extends JFrame {
 	private JLabel changeSizeLabel;
 	private JLabel addEdgeLabel;
 	private JLabel incorrectInputLabel;
-	private JTextField firstVertex;
-	private JTextField secondVertex;
+	private JSpinner firstVertex;
+	private JSpinner secondVertex;
 	private JButton addEdgeButton;
 	private JButton deleteGraphButton;
-	private JTextField maxVertices;
-	private JTextField maxEdges;
+	private JSpinner maxVertices;
+	private JSpinner maxEdges;
 	private JLabel maxVerticesLabel;
 	private JLabel maxEdgesLabel;
 	private JButton generateGraphButton;
@@ -37,8 +37,8 @@ public class AppFrame extends JFrame {
 		panel = new GraphDrawPanel(drawableGraph);
 		panel.setBackground(Color.WHITE);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(1000, 400));
-		this.setSize(1200, 800);
+		this.setMinimumSize(new Dimension(1300, 400));
+		this.setSize(1300, 800);
 		this.setLayout(new GridBagLayout());
 		
 		barMenu = new JMenuBar();
@@ -83,23 +83,20 @@ public class AppFrame extends JFrame {
 			int value = ((JSlider)e.getSource()).getValue();
 			panel.changeCircleSize(value);
 		});
-		
-		firstVertex = new JTextField();
-		secondVertex = new JTextField();
-		maxVertices = new JTextField("10");
-		maxEdges = new JTextField("10");
-		
+
+		maxVertices = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		maxEdges = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		firstVertex = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		secondVertex = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		maxVertices.setValue(10);
+		maxEdges.setValue(10);
+
 		addEdgeButton = new JButton("Добавить ребро");
 		addEdgeButton.addActionListener(e -> {
-			try {
-				drawableGraph.addEdge(Integer.parseInt(firstVertex.getText()), Integer.parseInt(secondVertex.getText()));
-				drawableGraph.bridgesList = null;
-				panel.showBridges = false;
-				panel.repaint();
-				incorrectInputLabel.setText("");
-			} catch (NumberFormatException exception) {
-				incorrectInputLabel.setText("Некорректный ввод");
-			}
+			drawableGraph.addEdge((int)firstVertex.getValue(), (int)secondVertex.getValue());
+			drawableGraph.bridgesList = null;
+			panel.showBridges = false;
+			panel.repaint();
 		});
 		
 		deleteGraphButton = new JButton("Очистить граф");
@@ -107,17 +104,12 @@ public class AppFrame extends JFrame {
 			drawableGraph.clear();
 			panel.repaint();
 		});
-		
+
 		generateGraphButton = new JButton("Сгенерировать случайный граф");
 		generateGraphButton.addActionListener(e -> {
-			try {
-				RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, Integer.parseInt(maxVertices.getText()), Integer.parseInt(maxEdges.getText()), (int) (panel.getSize().getHeight() * 0.9), (int) (panel.getSize().getWidth() * 0.9));
-				generator.generate();
-				panel.repaint();
-				incorrectInputLabel.setText("");
-			} catch (NumberFormatException exception) {
-				incorrectInputLabel.setText("Некорректный ввод");
-			}
+			RandomGraphGenerator generator = new RandomGraphGenerator(drawableGraph, (int)maxVertices.getValue(), (int)maxEdges.getValue(), (int) (panel.getSize().getHeight() * 0.9), (int) (panel.getSize().getWidth() * 0.9));
+			generator.generate();
+			panel.repaint();
 		});
 		
 		showBridgesButton = new JButton("Показать мосты");
@@ -144,7 +136,7 @@ public class AppFrame extends JFrame {
 		this.add(addEdgeButton, new GridBagConstraints(9,0,1,1,0.4,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(maxVerticesLabel, new GridBagConstraints(0,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(maxVertices, new GridBagConstraints(1,1,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
-		this.add(maxEdgesLabel, new GridBagConstraints(0,2,1,1,0,0.1, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
+		this.add(maxEdgesLabel, new GridBagConstraints(0,2,1,1,0,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(maxEdges, new GridBagConstraints(1,2,1,1,0.1,0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 		this.add(generateGraphButton, new GridBagConstraints(2,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));
 		this.add(showBridgesButton, new GridBagConstraints(3,1,1,2,0,0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,2,0,0), 0,0));

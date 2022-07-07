@@ -52,8 +52,8 @@ public class GraphDrawPanel extends JPanel {
 		});
 	}
 
-	public void changeCircleSize(int new_size){
-		this.circleSize = new_size;
+	public void changeCircleSize(int newSize){
+		this.circleSize = newSize;
 		repaint();
 	}
 
