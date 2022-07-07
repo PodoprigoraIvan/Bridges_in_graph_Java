@@ -5,6 +5,7 @@ import com.github.podoprigoraivan.swingapp.SaveAndLoad.Saver;
 import com.github.podoprigoraivan.swingapp.algorithm.BridgesFinder;
 import com.github.podoprigoraivan.swingapp.graph.DrawableGraph;
 import com.github.podoprigoraivan.swingapp.random.RandomGraphGenerator;
+import org.json.JSONException;
 
 import java.awt.*;
 import java.io.File;
@@ -46,27 +47,29 @@ public class AppFrame extends JFrame {
 		
 		saveFileMenuItem = new JMenuItem("Сохранить граф в файл");
 		saveFileMenuItem.addActionListener(e -> {
-			try {
-				File file = new File("test.json");
-				Saver Write = new Saver(drawableGraph, file);
-				Write.Save();
-				panel.repaint();
-				incorrectInputLabel.setText("");
-			} catch (NumberFormatException exception) {
-				incorrectInputLabel.setText("Некорректный ввод");
-			}
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.showSaveDialog(this);
+			File file = fileChooser.getSelectedFile();
+			Saver saver = new Saver(drawableGraph, file);
+			saver.save();
+			panel.repaint();
+			incorrectInputLabel.setText("");
 		});
 
 		loadFileMenuItem = new JMenuItem("Загрузить граф из файла");
 		loadFileMenuItem.addActionListener(e -> {
 			try {
-				File file = new File("test.json");
-				Loader readGraph = new Loader(drawableGraph, file);
-				readGraph.Load();
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(this);
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.getSelectedFile();
+				File file = fileChooser.getSelectedFile();
+				Loader loader = new Loader(drawableGraph, file);
+				loader.load();
 				panel.repaint();
 				incorrectInputLabel.setText("");
 			} catch (Exception exception) {
-				exception.printStackTrace();
+				incorrectInputLabel.setText("Неверный формат файла!");
 			}
 		});
 		
@@ -79,7 +82,6 @@ public class AppFrame extends JFrame {
 		changeSizeLabel = new JLabel("Размер вершин ");
 		addEdgeLabel = new JLabel("Вершины добавляемого ребра: ");
 		slider.addChangeListener(e -> {
-			// изменение отображаемого размера вершин графа
 			int value = ((JSlider)e.getSource()).getValue();
 			panel.changeCircleSize(value);
 		});

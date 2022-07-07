@@ -13,14 +13,13 @@ public class Loader {
     private DrawableGraph drawableGraph;
     private File file;
 
-    public Loader(DrawableGraph Graph, File file){
-        Graph.clear();
-        this.drawableGraph = Graph;
+    public Loader(DrawableGraph graph, File file){
+        graph.clear();
+        this.drawableGraph = graph;
         this.file = file;
     }
 
-
-    public void Load() throws Exception {
+    public void load() throws Exception {
         try (FileReader reader = new FileReader(file)) {
             int fileLen = (int) file.length();
             char[] chars = new char[fileLen];

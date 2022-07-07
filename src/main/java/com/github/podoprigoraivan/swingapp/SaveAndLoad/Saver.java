@@ -5,40 +5,39 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Saver {
 
 
-    protected ArrayList<ArrayList<Integer>> AllList = new ArrayList<ArrayList<Integer>>();
+    protected ArrayList<ArrayList<Integer>> allList = new ArrayList<ArrayList<Integer>>();
 
     private File file;
-    private DrawableGraph Graph;
-    private ArrayList<Integer> ListEdge;
-    private ArrayList<Integer> ListCoor = new ArrayList<>();
+    private DrawableGraph graph;
+    private ArrayList<Integer> listEdge;
+    private ArrayList<Integer> listCoor = new ArrayList<>();
 
-    public Saver(DrawableGraph Graph, File file){
-        this.Graph = Graph;
+    public Saver(DrawableGraph graph, File file){
+        this.graph = graph;
         this.file = file;
 
     }
 
-    public void Save()
+    public void save()
     {
         JSONObject json = new JSONObject();
 
         try {
-        for (int i = 0; i < Graph.vertexAmount(); i++){
-            ListEdge = Graph.getVertexAdjacencyList(i);
-            ListCoor.add(Graph.getX(i));
-            ListCoor.add(Graph.getY(i));
-            AllList.add(ListEdge);
-            AllList.add(ListCoor);
-            json.put(String.valueOf(i), AllList);
-            ListCoor.clear();
-            AllList.clear();
+        for (int i = 0; i < graph.vertexAmount(); i++){
+            listEdge = graph.getVertexAdjacencyList(i);
+            listCoor.add(graph.getX(i));
+            listCoor.add(graph.getY(i));
+            allList.add(listEdge);
+            allList.add(listCoor);
+            json.put(String.valueOf(i), allList);
+            listCoor.clear();
+            allList.clear();
         }
 
         } catch (JSONException e) {
