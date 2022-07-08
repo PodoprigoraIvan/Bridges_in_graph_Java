@@ -6,31 +6,31 @@ import java.util.Arrays;
 
 public class BridgesFinder {
     private static boolean[] used;
-    private static int[] tin;
-    private static int[] fup;
+    private static int[] vertexFirstVisitTime;
+    private static int[] vertexMinimalTimeToReach;
     private static int timer;
     private Graph graph;
 
     public BridgesFinder(Graph graph) {
         used = new boolean[graph.vertexAmount()];
-        tin = new int[graph.vertexAmount()];
-        fup = new int[graph.vertexAmount()];
+        vertexFirstVisitTime = new int[graph.vertexAmount()];
+        vertexMinimalTimeToReach = new int[graph.vertexAmount()];
         this.graph = graph;
         timer = 0;
     }
 
     private static void dfs(int v, int p, Graph graph, ArrayList<int[]> bridges_list) {
         used[v] = true;
-        tin[v] = fup[v] = timer++;
+        vertexFirstVisitTime[v] = vertexMinimalTimeToReach[v] = timer++;
         for (int i = 0; i < graph.getVertexAdjacencyList(v).size(); ++i) {
             Integer to = graph.getVertexAdjacencyList(v).get(i);
             if (to == p)  continue;
             if (used[to])
-                fup[v] = Math.min(fup[v], tin[to]);
+                vertexMinimalTimeToReach[v] = Math.min(vertexMinimalTimeToReach[v], vertexFirstVisitTime[to]);
             else {
                 dfs(to, v, graph, bridges_list);
-                fup[v] = Math.min(fup[v], fup[to]);
-                if (fup[to] > tin[v]) {
+                vertexMinimalTimeToReach[v] = Math.min(vertexMinimalTimeToReach[v], vertexMinimalTimeToReach[to]);
+                if (vertexMinimalTimeToReach[to] > vertexFirstVisitTime[v]) {
                     bridges_list.add(new int[]{v, to});
                 }
             }
